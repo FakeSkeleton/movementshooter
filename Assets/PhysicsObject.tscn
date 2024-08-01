@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://djn4wukbao523"]
+
+[ext_resource type="ArrayMesh" uid="uid://dlwmeqrmf144p" path="res://Assets/CubeMesh.res" id="1_xnpoi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_643w5"]
+albedo_color = Color(0.235294, 0.737255, 0, 1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_r6xi3"]
+points = PackedVector3Array(1, 1, 1, 1, 1, -1, -1, 1, 1, 1, -1, 1, 1, -1, -1, -1, 1, -1, -1, -1, 1, -1, -1, -1)
+
+[node name="PhysicsObject" type="RigidBody3D"]
+mass = 10.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_643w5")
+mesh = ExtResource("1_xnpoi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_r6xi3")

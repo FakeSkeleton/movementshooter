@@ -1,0 +1,250 @@
+[gd_scene load_steps=22 format=3 uid="uid://dggy4jdtcylfi"]
+
+[ext_resource type="PackedScene" uid="uid://xinqpqt7squf" path="res://Assets/RewindManager.tscn" id="1_6nqhx"]
+[ext_resource type="PackedScene" uid="uid://dulknifb0j202" path="res://Assets/Player.tscn" id="1_syvyg"]
+[ext_resource type="Script" path="res://Scripts/PlayAnimScript.gd" id="2_d8own"]
+[ext_resource type="PackedScene" uid="uid://dvret7013y3x3" path="res://Assets/PhysicsRewindObject.tscn" id="3_n0ug0"]
+[ext_resource type="PackedScene" uid="uid://v0efgkbk67q4" path="res://Assets/untitled.glb" id="4_2po6i"]
+[ext_resource type="PackedScene" uid="uid://b058u0s7erbbu" path="res://Assets/AnimObject.tscn" id="5_nk21b"]
+[ext_resource type="PackedScene" uid="uid://djn4wukbao523" path="res://Assets/PhysicsObject.tscn" id="6_6048q"]
+
+[sub_resource type="Animation" id="Animation_1elbp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 0.389452, 4)]
+}
+
+[sub_resource type="Animation" id="Animation_xsgi1"]
+resource_name = "move"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 0.389452, 4), Vector3(-3.57755, 0.389452, 4), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ghf7s"]
+_data = {
+"RESET": SubResource("Animation_1elbp"),
+"move": SubResource("Animation_xsgi1")
+}
+
+[sub_resource type="Animation" id="Animation_mlqju"]
+length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-2, 2, 3)]
+}
+
+[sub_resource type="Animation" id="Animation_wlkuk"]
+resource_name = "move"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-2, 2, 3), Vector3(2.17396, 2, 3), Vector3(-2, 2, 3)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fyen7"]
+_data = {
+"RESET": SubResource("Animation_mlqju"),
+"move": SubResource("Animation_wlkuk")
+}
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_60nvy"]
+sky_top_color = Color(0.85098, 0.901961, 1, 1)
+sky_horizon_color = Color(0.65098, 0.768627, 1, 1)
+sky_cover_modulate = Color(0.85098, 0.901961, 1, 1)
+
+[sub_resource type="Sky" id="Sky_puobm"]
+sky_material = SubResource("ProceduralSkyMaterial_60nvy")
+
+[sub_resource type="Environment" id="Environment_usorn"]
+background_mode = 2
+background_color = Color(0.85098, 0.901961, 1, 1)
+sky = SubResource("Sky_puobm")
+ambient_light_source = 3
+ambient_light_color = Color(0.85098, 0.901961, 1, 1)
+reflected_light_source = 2
+tonemap_white = 1.95
+ssao_enabled = true
+ssil_enabled = true
+ssil_radius = 16.0
+glow_enabled = true
+glow_normalized = true
+glow_bloom = 0.5
+fog_light_color = Color(0.85098, 0.901961, 1, 1)
+fog_density = 0.0311
+volumetric_fog_temporal_reprojection_enabled = false
+adjustment_enabled = true
+
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_8idql"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_351rq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1wjh7"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5fqwj"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_3a3li"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Rewind Manager" parent="." instance=ExtResource("1_6nqhx")]
+
+[node name="AnimationObjects" type="Node" parent="."]
+script = ExtResource("2_d8own")
+
+[node name="RewindObject" parent="AnimationObjects" instance=ExtResource("4_2po6i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.389452, 4)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationObjects/RewindObject"]
+speed_scale = 0.1
+libraries = {
+"": SubResource("AnimationLibrary_ghf7s")
+}
+
+[node name="AnimationObject" parent="AnimationObjects" instance=ExtResource("5_nk21b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, 3)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationObjects/AnimationObject"]
+reset_on_save = false
+speed_scale = 0.1
+libraries = {
+"": SubResource("AnimationLibrary_fyen7")
+}
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(0.955149, -0.23291, 0.182874, 0, 0.617558, 0.786525, -0.296125, -0.751249, 0.58986, -0.72049, 7.20368, 6.45456)
+light_indirect_energy = 16.0
+shadow_enabled = true
+shadow_opacity = 0.7
+shadow_blur = 3.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_usorn")
+camera_attributes = SubResource("CameraAttributesPhysical_8idql")
+
+[node name="Walls" type="Node" parent="Environment"]
+
+[node name="Wall" type="StaticBody3D" parent="Environment/Walls"]
+transform = Transform3D(1.078, 0, 0, 0, 10, 0, 0, 0, 20, -7.7622, 3.46897, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Walls/Wall"]
+mesh = SubResource("BoxMesh_351rq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Walls/Wall"]
+shape = SubResource("BoxShape3D_1wjh7")
+
+[node name="Wall4" type="StaticBody3D" parent="Environment/Walls"]
+transform = Transform3D(1.078, 0, 0, 0, 10, 0, 0, 0, 20, -13.7223, 9.81404, -12.9561)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Walls/Wall4"]
+mesh = SubResource("BoxMesh_351rq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Walls/Wall4"]
+shape = SubResource("BoxShape3D_1wjh7")
+
+[node name="Wall5" type="StaticBody3D" parent="Environment/Walls"]
+transform = Transform3D(1.078, 0, 0, 0, 10, 0, 0, 0, 20, -8.39207, 16.2991, -16.3441)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Walls/Wall5"]
+mesh = SubResource("BoxMesh_351rq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Walls/Wall5"]
+shape = SubResource("BoxShape3D_1wjh7")
+
+[node name="Wall2" type="StaticBody3D" parent="Environment/Walls"]
+transform = Transform3D(0.695616, 0, -15.2788, 0, 10, 0, 0.82353, 0, 12.9057, -0.14144, 3.46897, -16.3693)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Walls/Wall2"]
+mesh = SubResource("BoxMesh_351rq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Walls/Wall2"]
+shape = SubResource("BoxShape3D_1wjh7")
+
+[node name="Wall3" type="StaticBody3D" parent="Environment/Walls"]
+transform = Transform3D(-4.71209e-08, 0, 20, 0, 10, 0, -1.078, 0, -8.74228e-07, 17.3591, 3.46897, -22.6757)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Walls/Wall3"]
+mesh = SubResource("BoxMesh_351rq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Walls/Wall3"]
+shape = SubResource("BoxShape3D_1wjh7")
+
+[node name="Floor" type="Node" parent="Environment"]
+
+[node name="floor" type="StaticBody3D" parent="Environment/Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.54562, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Floor/floor"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0)
+mesh = SubResource("BoxMesh_351rq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor/floor"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0)
+shape = SubResource("BoxShape3D_1wjh7")
+
+[node name="Other" type="Node" parent="Environment"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Environment/Other"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Other/StaticBody3D"]
+mesh = SubResource("BoxMesh_351rq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Other/StaticBody3D"]
+shape = SubResource("BoxShape3D_1wjh7")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Environment/Other"]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 14.9577, 5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Other/StaticBody3D2"]
+shape = SubResource("SphereShape3D_5fqwj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Other/StaticBody3D2"]
+mesh = SubResource("SphereMesh_3a3li")
+
+[node name="PhysicsObjects" type="Node" parent="."]
+
+[node name="Physics Rewind" parent="PhysicsObjects" instance=ExtResource("3_n0ug0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.10351, 14.9544, 2.73231)
+
+[node name="PhysicsObject" parent="PhysicsObjects" instance=ExtResource("6_6048q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 8)
+
+[node name="Player" parent="." instance=ExtResource("1_syvyg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)

@@ -1,0 +1,115 @@
+[gd_scene load_steps=8 format=3 uid="uid://dulknifb0j202"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_oku8m"]
+[ext_resource type="Script" path="res://Scripts/Pause.gd" id="2_lbvpo"]
+[ext_resource type="FontFile" uid="uid://cwg2gvks7884y" path="res://Assets/Pixantiqua-24l8.ttf" id="3_wlmt7"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sv5hl"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ts6ij"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rx7g2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5qdk8"]
+
+[node name="Player" type="CharacterBody3D" groups=["Player", "Rewindable"]]
+script = ExtResource("1_oku8m")
+
+[node name="Head" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+
+[node name="Camera" type="Camera3D" parent="Head"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_sv5hl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_ts6ij")
+
+[node name="LeftWall" type="RayCast3D" parent="."]
+target_position = Vector3(-1, 0, 0)
+debug_shape_thickness = 5
+
+[node name="RightWall" type="RayCast3D" parent="."]
+target_position = Vector3(1, 0, 0)
+debug_shape_thickness = 5
+
+[node name="Pause" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("2_lbvpo")
+
+[node name="Control" type="Control" parent="Pause"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ColorRect" type="ColorRect" parent="Pause/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.729412, 0.729412, 0.729412, 0.501961)
+
+[node name="Quit" type="Button" parent="Pause/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.5
+offset_top = 94.0
+offset_right = 71.5
+offset_bottom = 173.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.341176, 0.341176, 0.341176, 1)
+theme_override_colors/font_hover_color = Color(0.152941, 0.152941, 0.152941, 1)
+theme_override_fonts/font = ExtResource("3_wlmt7")
+theme_override_font_sizes/font_size = 70
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rx7g2")
+text = "Quit"
+flat = true
+
+[node name="Continue" type="Button" parent="Pause/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.5
+offset_top = -42.0
+offset_right = 150.5
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.329412, 0.329412, 0.329412, 1)
+theme_override_colors/font_hover_color = Color(0.152941, 0.152941, 0.152941, 1)
+theme_override_fonts/font = ExtResource("3_wlmt7")
+theme_override_font_sizes/font_size = 70
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5qdk8")
+text = "Continue
+"
+flat = true
+
+[node name="FPS Counter" type="Label" parent="Pause"]
+offset_right = 126.0
+offset_bottom = 54.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_wlmt7")
+theme_override_font_sizes/font_size = 50
+text = "FPS :)"
+
+[connection signal="pressed" from="Pause/Control/Quit" to="Pause" method="_on_quit_pressed"]
+[connection signal="pressed" from="Pause/Control/Continue" to="Pause" method="_on_continue_pressed"]

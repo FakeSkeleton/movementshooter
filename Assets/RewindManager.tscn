@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://xinqpqt7squf"]
+
+[ext_resource type="Script" path="res://Scripts/RewindManager.gd" id="1_m4rb6"]
+
+[node name="Rewind Manager" type="Node"]
+script = ExtResource("1_m4rb6")

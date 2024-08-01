@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://v0efgkbk67q4"]
+
+[ext_resource type="Script" path="res://Scripts/Rewind.gd" id="1_2yund"]
+[ext_resource type="ArrayMesh" uid="uid://dlwmeqrmf144p" path="res://Assets/CubeMesh.res" id="2_y0lto"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bis4w"]
+albedo_color = Color(1, 0.415686, 0, 1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_p6utu"]
+points = PackedVector3Array(1, 1, 1, 1, 1, -1, -1, 1, 1, 1, -1, 1, 1, -1, -1, -1, 1, -1, -1, -1, 1, -1, -1, -1)
+
+[node name="RewindObject" type="StaticBody3D" groups=["Rewindable"]]
+script = ExtResource("1_2yund")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_bis4w")
+mesh = ExtResource("2_y0lto")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_p6utu")

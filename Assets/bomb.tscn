@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://brbbjokfgfhbc"]
+
+[ext_resource type="Script" path="res://Scripts/bomb.gd" id="1_pdicx"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_uon7m"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bjwpb"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_oc3hx"]
+
+[node name="Bomb" type="RigidBody3D"]
+script = ExtResource("1_pdicx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_uon7m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_bjwpb")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+shape = SubResource("SphereShape3D_oc3hx")
+
+[node name="Marker2D" type="Marker2D" parent="Area3D"]
+position = Vector2(219, 168)
+
+[node name="Marker2D2" type="Marker2D" parent="Area3D"]
+position = Vector2(339, 165)
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
